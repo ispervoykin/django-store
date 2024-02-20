@@ -1,4 +1,4 @@
-from django.shortcuts import get_list_or_404, render
+from django.shortcuts import get_list_or_404, redirect, render
 from django.core.paginator import Paginator
 
 from goods.models import Products
@@ -10,6 +10,9 @@ def catalog(request, category_slug=None):
     on_sale = request.GET.get("on_sale", None)
     order_by = request.GET.get("order_by", None)
     query = request.GET.get("q", None)
+
+    if not query and not category_slug:
+        return redirect("main:index")
 
     if category_slug == "all":
         goods = Products.objects.all()
