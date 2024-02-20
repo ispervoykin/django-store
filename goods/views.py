@@ -1,5 +1,7 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_list_or_404, redirect, render
 from django.core.paginator import Paginator
+from django.urls import reverse
 
 from goods.models import Products
 from goods.utils import q_search
@@ -12,7 +14,7 @@ def catalog(request, category_slug=None):
     query = request.GET.get("q", None)
 
     if not query and not category_slug:
-        return redirect("main:index")
+        return HttpResponseRedirect(reverse("main:index"))
 
     if category_slug == "all":
         goods = Products.objects.all()
