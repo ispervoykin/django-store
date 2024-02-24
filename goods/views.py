@@ -14,7 +14,7 @@ def catalog(request, category_slug=None):
     query = request.GET.get("q", None)
 
     if not query and not category_slug:
-        return HttpResponseRedirect(reverse("main:index"))
+        return redirect(request.META["HTTP_REFERER"])
 
     if category_slug == "all":
         goods = Products.objects.all()
